@@ -7,5 +7,6 @@ Springboot와 JPA로 web application제작을 스터디합니다.
 - JPA
 - Thymeleaf
 - MariaDB
+- h2
 - Junit5
 
