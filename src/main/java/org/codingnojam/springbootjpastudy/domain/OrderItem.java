@@ -26,4 +26,25 @@ public class OrderItem {
     private int orderPrice;
 
     private int count;
+
+    // 정적 팩토리 메서드 생성자 //
+    public static OrderItem createOrderItem(Item item, int orderPrice, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStockQuantity(count);
+        return orderItem;
+    }
+
+
+    // 비즈니스 로직//
+    public void cancel() {
+        item.addStockQuantity(count);
+    }
+
+    public int getTotalPrice() {
+        return this.getOrderPrice() * this.getCount();
+    }
 }
