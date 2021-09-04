@@ -1,6 +1,8 @@
 package org.codingnojam.springbootjpastudy.service;
 
 import lombok.RequiredArgsConstructor;
+import org.codingnojam.springbootjpastudy.controller.BookForm;
+import org.codingnojam.springbootjpastudy.domain.item.Book;
 import org.codingnojam.springbootjpastudy.domain.item.Item;
 import org.codingnojam.springbootjpastudy.repository.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,12 @@ public class ItemService {
     @Transactional
     public void saveItem(Item item) {
         itemRepository.save(item);
+    }
+
+    @Transactional
+    public void updateItem(Long itemId, BookForm bookForm) {
+        Book book = (Book) itemRepository.findById(itemId);
+        book.change(bookForm);
     }
 
     public List<Item> findItems() {
