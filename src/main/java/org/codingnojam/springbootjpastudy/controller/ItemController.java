@@ -3,6 +3,7 @@ package org.codingnojam.springbootjpastudy.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.codingnojam.springbootjpastudy.domain.item.Book;
+import org.codingnojam.springbootjpastudy.domain.item.Item;
 import org.codingnojam.springbootjpastudy.service.ItemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class ItemController {
         return "items/createItemForm";
     }
 
-    @PostMapping("items/new")
+    @PostMapping("/items/new")
     public String create(@Valid BookForm form, BindingResult result) {
         if(result.hasErrors()){
             log.info("에러발생");
@@ -41,7 +43,14 @@ public class ItemController {
         book.setAuthor(form.getAuthor());
 
         itemService.saveItem(book);
-        return "redirect:/items";
+        return "redirect:/";
+    }
+
+    @GetMapping("/items")
+    public String list(Model model) {
+        List<Item> items = itemService.findItems();
+        model.addAttribute("items", items);
+        return "items/itemList";
     }
 }
 
