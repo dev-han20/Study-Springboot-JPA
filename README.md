@@ -1,5 +1,5 @@
 # Study-Springboot-JPA
-Springboot + JPA -> web application제작 
+Springboot + JPA -> web application 
 
 ## Skils
 - Java 11
