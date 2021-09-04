@@ -13,5 +13,6 @@ import javax.persistence.Entity;
 public class Book extends Item {
 
     private String itsn;
+    private String author;
 
 }
