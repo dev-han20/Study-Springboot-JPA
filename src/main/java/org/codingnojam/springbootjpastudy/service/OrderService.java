@@ -12,8 +12,11 @@ import org.codingnojam.springbootjpastudy.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -44,5 +47,9 @@ public class OrderService {
 
     public Order findById(Long orderId) {
         return orderRepository.findOne(orderId);
+    }
+
+    public List<Order> findAll() {
+        return orderRepository.findAll();
     }
 }
