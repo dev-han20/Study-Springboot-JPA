@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -29,7 +31,7 @@ public class ItemController {
 
     @PostMapping("/items/new")
     public String create(@Valid BookForm form, BindingResult result) {
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             log.info("에러발생");
 //            return "redirect:/items/new";
             return "items/createItemForm";
@@ -39,7 +41,7 @@ public class ItemController {
         book.setStockQuantity(form.getStockQuantity());
         book.setPrice(form.getPrice());
         book.setName(form.getName());
-        book.setItsn(form.getIsbn());
+        book.setIsbn(form.getIsbn());
         book.setAuthor(form.getAuthor());
 
         itemService.saveItem(book);
@@ -52,6 +54,52 @@ public class ItemController {
         model.addAttribute("items", items);
         return "items/itemList";
     }
+
+    @GetMapping("items/{itemId}/edit")
+    public String updateItemForm(@PathVariable("itemId") Long id, Model model){
+
+        Book book = (Book) itemService.findOne(id);
+
+        BookForm bookForm = new BookForm();
+        bookForm.setAuthor(book.getAuthor());
+        bookForm.setName(book.getName());
+        bookForm.setPrice(book.getPrice());
+        bookForm.setStockQuantity(book.getStockQuantity());
+        bookForm.setId(book.getId());
+        bookForm.setIsbn(book.getIsbn());
+
+        model.addAttribute("bookForm", bookForm);
+        return "items/updateItemForm";
+    }
+
+    @PostMapping("items/{itemId}/edit")
+    public String updateItem(@ModelAttribute("bookForm") BookForm bookForm, @PathVariable String itemId) {
+
+        Book book = new Book();
+        book.setAuthor(bookForm.getAuthor());
+        book.setName(bookForm.getName());
+        book.setPrice(bookForm.getPrice());
+        book.setStockQuantity(bookForm.getStockQuantity());
+        book.setId(bookForm.getId());
+        book.setIsbn(bookForm.getIsbn());
+
+        itemService.saveItem(book);
+        return "redirect:/items";
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
