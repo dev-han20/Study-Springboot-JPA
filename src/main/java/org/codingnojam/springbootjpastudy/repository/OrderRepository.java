@@ -22,7 +22,9 @@ public class OrderRepository {
     }
 
     public List<Order> findAll() {
-        return em.createQuery("select o from Order o")
+        return em.createQuery("select o from Order o join o.member m", Order.class)
                 .getResultList();
     }
+
+
 }

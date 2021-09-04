@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
 
-    @GetMapping(value = "/")
-    public String gotohello(Model model) {
-        System.out.println("hello");
-
-        return "hello";
-    }
+//    @GetMapping(value = "/")
+//    public String gotohello(Model model) {
+//        System.out.println("hello");
+//
+//        return "hello";
+//    }
 }
